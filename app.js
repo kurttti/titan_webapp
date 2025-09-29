@@ -208,9 +208,6 @@ function createPreviewTable(data) {
 
 // Simple tfjs-vis charts
 function createVisualizations() {
-    const chartsDiv = document.getElementById('charts');
-    chartsDiv.innerHTML = '<h3>Data Visualizations</h3>';
-
     // Survival by Sex
     const survivalBySex = {};
     trainData.forEach(row => {
@@ -220,11 +217,13 @@ function createVisualizations() {
             if (row.Survived === 1) survivalBySex[row.Sex].survived++;
         }
     });
-    const sexData = Object.entries(survivalBySex).map(([sex, s]) => ({
+    const sexValues = Object.entries(survivalBySex).map(([sex, s]) => ({
         x: sex, y: (s.survived / s.total) * 100
     }));
-    tfvis.render.barchart({ name: 'Survival Rate by Sex', tab: 'Charts' }, sexData, {
-        xLabel: 'Sex', yLabel: 'Survival Rate (%)'
+    const sexContainer = document.getElementById('chart-sex');
+    sexContainer.innerHTML = ''; // clear if re-render
+    tfvis.render.barchart(sexContainer, sexValues, {
+        xLabel: 'Sex', yLabel: 'Survival Rate (%)', width: 520, height: 320
     });
 
     // Survival by Pclass
@@ -236,15 +235,16 @@ function createVisualizations() {
             if (row.Survived === 1) byPclass[row.Pclass].survived++;
         }
     });
-    const pclassData = Object.entries(byPclass).map(([pc, s]) => ({
+    const pclassValues = Object.entries(byPclass).map(([pc, s]) => ({
         x: `Class ${pc}`, y: (s.survived / s.total) * 100
     }));
-    tfvis.render.barchart({ name: 'Survival Rate by Passenger Class', tab: 'Charts' }, pclassData, {
-        xLabel: 'Passenger Class', yLabel: 'Survival Rate (%)'
+    const pclassContainer = document.getElementById('chart-pclass');
+    pclassContainer.innerHTML = '';
+    tfvis.render.barchart(pclassContainer, pclassValues, {
+        xLabel: 'Passenger Class', yLabel: 'Survival Rate (%)', width: 520, height: 320
     });
-
-    chartsDiv.innerHTML += '<p>Charts are displayed in the tfjs-vis visor (button at bottom-right).</p>';
 }
+
 
 // -------------------- Preprocessing --------------------
 
@@ -545,11 +545,16 @@ async function plotROC(trueLabels, predictions) {
         auc += dx * avgY;
     }
 
+    const rocEl = document.getElementById('roc-chart');
+if (rocEl) {
+    rocEl.innerHTML = ''; // clear previous render
     tfvis.render.linechart(
-        { name: 'ROC Curve', tab: 'Evaluation' },
+        rocEl,
         { values: [sorted], series: ['ROC'] },
-        { xLabel: 'False Positive Rate', yLabel: 'True Positive Rate', width: 420, height: 420 }
+        { xLabel: 'False Positive Rate', yLabel: 'True Positive Rate', width: 520, height: 360 }
     );
+}
+
 
     const metricsDiv = document.getElementById('performance-metrics');
     // Avoid duplicate AUC lines by replacing/adding it once
