@@ -64,7 +64,11 @@
             <button id="inspect-btn" onclick="inspectData()" disabled>Inspect Data</button>
             <div id="data-preview" class="data-preview"></div>
             <div id="data-stats"></div>
-            <div id="charts"></div>
+            <div id="charts">
+  <h3>Data Visualizations</h3>
+  <div id="chart-sex" style="margin:12px 0;"></div>
+  <div id="chart-pclass" style="margin:12px 0;"></div>
+</div>
         </section>
 
         <section id="preprocessing">
@@ -99,6 +103,10 @@
                 <input type="range" id="threshold-slider" class="slider" min="0" max="1" step="0.01" value="0.5" disabled>
                 <span id="threshold-value">0.5</span>
             </div>
+            <div class="metric-card" style="flex:1 1 420px;">
+              <h3>ROC Curve</h3>
+              <div id="roc-chart"></div>
+                </div>
             <div id="metrics-output" class="metrics-container">
                 <div class="metric-card">
                     <h3>Confusion Matrix</h3>
