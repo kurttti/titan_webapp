@@ -1,9 +1,3 @@
-# titan_webapp
-Awesome — here’s a clean, copy-pasteable **README.md** you can drop into the repo.
-It includes (1) a rewritten prompt/spec for the app, (2) full setup/usage docs, and (3) a section explicitly documenting the two fixes you asked for.
-
----
-
 # Titanic Survival Classifier (TensorFlow.js, no server)
 
 A lightweight, fully client-side web app that trains a shallow binary classifier on the **Kaggle Titanic** dataset using **TensorFlow.js** and **tfjs-vis**. Runs entirely in the browser (works on GitHub Pages). Upload `train.csv` and `test.csv`, train, evaluate with ROC/AUC + threshold slider, predict, and export `submission.csv`.
